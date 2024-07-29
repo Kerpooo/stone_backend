@@ -11,19 +11,23 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-8$)p%hymlql#y*rcm!q6u#(2vo&rb^m)ji*=edi8=)o7_jl2%#"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("LOCAL_DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "coreapi",
     "api",
 ]
 
@@ -74,10 +80,17 @@ WSGI_APPLICATION = "rest.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("LOCAL_DB_NAME"),
+        "USER": os.getenv("LOCAL_DB_USER"),
+        "PASSWORD": os.getenv("LOCAL_DB_PASSWORD"),
+        "HOST": os.getenv("LOCAL_DB_HOST"),
+        "PORT": os.getenv("LOCAL_DB_PORT"),
+        "OPTIONS": {"options": f'-c search_path={os.getenv("LOCAL_DB_ESQUEMA")}'},
+        # ESQUEMA DE BASE DE DATOS
     }
 }
 
@@ -122,3 +135,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
