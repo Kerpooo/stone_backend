@@ -21,31 +21,42 @@ class Bodega(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bodega'
+        db_table = "bodega"
 
 
 class DetalleVenta(models.Model):
     id_detalle = models.AutoField(primary_key=True)
-    id_venta = models.ForeignKey('Ventas', models.DO_NOTHING, db_column='id_venta', blank=True, null=True)
-    id_producto = models.ForeignKey('Productos', models.DO_NOTHING, db_column='id_producto', blank=True, null=True)
+    id_venta = models.ForeignKey(
+        "Ventas", models.DO_NOTHING, db_column="id_venta", blank=True, null=True
+    )
+    id_producto = models.ForeignKey(
+        "Productos", models.DO_NOTHING, db_column="id_producto", blank=True, null=True
+    )
     cantidad = models.IntegerField()
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    precio_unitario = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    nombre_producto = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'detalle_venta'
+        db_table = "detalle_venta"
 
 
 class Inventario(models.Model):
     id_inventario = models.AutoField(primary_key=True)
-    id_producto = models.OneToOneField('Productos', models.DO_NOTHING, db_column='id_producto', blank=True, null=True)
+    id_producto = models.OneToOneField(
+        "Productos", models.DO_NOTHING, db_column="id_producto", blank=True, null=True
+    )
     cantidad_disponible = models.IntegerField()
-    id_bodega = models.ForeignKey(Bodega, models.DO_NOTHING, db_column='id_bodega', blank=True, null=True)
+    id_bodega = models.ForeignKey(
+        Bodega, models.DO_NOTHING, db_column="id_bodega", blank=True, null=True
+    )
 
     class Meta:
         managed = False
-        db_table = 'inventario'
+        db_table = "inventario"
 
 
 class Productos(models.Model):
@@ -56,7 +67,7 @@ class Productos(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'productos'
+        db_table = "productos"
 
 
 class Ventas(models.Model):
@@ -66,4 +77,4 @@ class Ventas(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ventas'
+        db_table = "ventas"
