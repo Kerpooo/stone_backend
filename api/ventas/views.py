@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .serializer import *
 from .models import DetalleVenta, Ventas
 from django.db import connection
@@ -11,6 +11,8 @@ from django.shortcuts import get_object_or_404
 
 
 class VentaViewSet(viewsets.ViewSet):
+
+    permission_classes = [permissions.IsAuthenticated]
 
     queryset = Ventas.objects.all()
 
