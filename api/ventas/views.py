@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .serializer import *
-from .models import *
+from .models import DetalleVenta, Ventas
 from django.db import connection
 from rest_framework import status
 import json
@@ -8,21 +8,6 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
-
-
-class BodegaViewSet(viewsets.ModelViewSet):
-    queryset = Bodega.objects.all()
-    serializer_class = BodegaSerializer
-
-
-class ProductoViewSet(viewsets.ModelViewSet):
-    queryset = Productos.objects.all()
-    serializer_class = ProductosSerializer
-
-
-class InventarioViewSet(viewsets.ModelViewSet):
-    queryset = Inventario.objects.all()
-    serializer_class = InventarioSerializer
 
 
 class VentaViewSet(viewsets.ViewSet):
