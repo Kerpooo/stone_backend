@@ -1,11 +1,11 @@
 from rest_framework import viewsets
-from rest_framework.views import APIView
 from .serializer import *
 from .models import *
 from django.db import connection
 from rest_framework import status
 import json
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -25,13 +25,37 @@ class InventarioViewSet(viewsets.ModelViewSet):
     serializer_class = InventarioSerializer
 
 
-class VentaViewSet(viewsets.ModelViewSet):
+class VentaViewSet(viewsets.ViewSet):
+
     queryset = Ventas.objects.all()
-    serializer_class = VentasSerializer
 
+    def list(self, request, format=None):
+        queryset = Ventas.objects.all().order_by("-fecha_venta")
+        serializer = VentasSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-class GenerarVentaView(APIView):
-    def post(self, request, format=None):
+    def retrieve(self, request, format=None, pk=None):
+        queryset = Ventas.objects.all()
+        venta = get_object_or_404(queryset, pk=pk)
+        serializer = VentasSerializer(venta)
+
+        # Obtener los detalles de la venta
+        detalles = DetalleVenta.objects.filter(id_venta=pk)
+        detalles_serializer = DetalleVentaSerializer(detalles, many=True)
+
+        response_data = {
+            "venta": serializer.data,
+            "detalles": detalles_serializer.data,
+        }
+
+        return Response(response_data)
+
+    def destroy(self, request, pk=None):
+        venta = get_object_or_404(Ventas, pk=pk)
+        venta.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def create(self, request, format=None):
         serializer = GenerarVentaSerializer(data=request.data)
         if serializer.is_valid():
             venta = serializer.data["venta"]

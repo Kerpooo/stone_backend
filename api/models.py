@@ -64,6 +64,7 @@ class Productos(models.Model):
     nombre = models.CharField(unique=True, max_length=255)
     descripcion = models.TextField(blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
+    activo = models.BooleanField()
 
     class Meta:
         managed = False

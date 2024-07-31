@@ -10,10 +10,5 @@ router.register(r"ventas", views.VentaViewSet)
 
 
 urlpatterns = [
-    path("", include(router.urls)),
-    path(
-        "generar_venta/",
-        views.GenerarVentaView.as_view(),
-        name="generar venta",
-    ),
+    path("", include(router.urls))
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Productos, Bodega, Inventario, Ventas
+from .models import *
 
 
 class ProductosSerializer(serializers.ModelSerializer):
@@ -25,9 +25,10 @@ class VentasSerializer(serializers.ModelSerializer):
         model = Ventas
         fields = "__all__"
 
-
-# Generar ventas
-
+class DetalleVentaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetalleVenta
+        fields = "__all__"
 
 # Producto unico
 class ProductoVentaSerializer(serializers.Serializer):
@@ -38,5 +39,3 @@ class ProductoVentaSerializer(serializers.Serializer):
 # Lista de los productos
 class GenerarVentaSerializer(serializers.Serializer):
     venta = ProductoVentaSerializer(many=True)
-
-
