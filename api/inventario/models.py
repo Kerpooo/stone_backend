@@ -2,7 +2,6 @@ from django.db import models
 from ..bodegas.models import Bodega
 
 
-
 class Inventario(models.Model):
     id_inventario = models.AutoField(primary_key=True)
     id_producto = models.OneToOneField(
@@ -14,5 +13,5 @@ class Inventario(models.Model):
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "inventario"

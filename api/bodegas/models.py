@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Bodega(models.Model):
     nombre = models.CharField(max_length=100)
     capacidad_max = models.IntegerField()
@@ -8,5 +9,5 @@ class Bodega(models.Model):
     espacio_disponible = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "bodega"

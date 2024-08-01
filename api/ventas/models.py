@@ -17,7 +17,7 @@ class DetalleVenta(models.Model):
     nombre_producto = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "detalle_venta"
 
 
@@ -27,5 +27,5 @@ class Ventas(models.Model):
     total_venta = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = "ventas"

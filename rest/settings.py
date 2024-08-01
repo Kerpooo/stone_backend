@@ -91,8 +91,12 @@ DATABASES = {
         "PASSWORD": os.getenv("LOCAL_DB_PASSWORD"),
         "HOST": os.getenv("LOCAL_DB_HOST"),
         "PORT": os.getenv("LOCAL_DB_PORT"),
-        "OPTIONS": {"options": f'-c search_path={os.getenv("LOCAL_DB_ESQUEMA")}'},
         # ESQUEMA DE BASE DE DATOS
+        "OPTIONS": {"options": f'-c search_path=inventario_ventas,public'},
+        # DB TEST
+        "TEST": {
+            "NAME": os.getenv("LOCAL_DB_TEST_NAME")
+        },
     }
 }
 
