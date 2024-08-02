@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "coreapi",
     "api",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+] 
 
 ROOT_URLCONF = "rest.urls"
 
@@ -92,11 +100,9 @@ DATABASES = {
         "HOST": os.getenv("LOCAL_DB_HOST"),
         "PORT": os.getenv("LOCAL_DB_PORT"),
         # ESQUEMA DE BASE DE DATOS
-        "OPTIONS": {"options": f'-c search_path=inventario_ventas,public'},
+        "OPTIONS": {"options": f"-c search_path=inventario_ventas,public"},
         # DB TEST
-        "TEST": {
-            "NAME": os.getenv("LOCAL_DB_TEST_NAME")
-        },
+        "TEST": {"NAME": os.getenv("LOCAL_DB_TEST_NAME")},
     }
 }
 
