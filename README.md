@@ -12,6 +12,10 @@ Esta es una aplicación de gestión de inventario desarrollada con Django y Djan
 
 ## Iniciar entorno virtual en Python
 
+## Usar las variables de entorno que se requieran
+
+En el archivo .env.example se encuentran las variables de entorno que se usaron en el proyecto. Si se necesita cambiar contraseñas usuario etc de donde esta hospedada la base de datos realizar los camios en ese archivo y cambiar el nombre del archivo a solo .env
+
 ```bash
 python -m venv env
 env\Scripts\activate  # En Windows
