@@ -21,18 +21,31 @@ class VentaViewSet(viewsets.ViewSet):
         serializer = VentasSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, format=None, pk=None):
+    def retrieve(self, request, pk=None):
         queryset = Ventas.objects.all()
         venta = get_object_or_404(queryset, pk=pk)
-        serializer = VentasSerializer(venta)
+        venta_serializer = VentasSerializer(venta)
 
         # Obtener los detalles de la venta
         detalles = DetalleVenta.objects.filter(id_venta=pk)
-        detalles_serializer = DetalleVentaSerializer(detalles, many=True)
+        detalles_data = []
+        
+        for detalle in detalles:
+            producto = detalle.id_producto
+            detalle_data = {
+                "id_detalle": detalle.id_detalle,
+                "cantidad": detalle.cantidad,
+                "precio_unitario": producto.precio,  # Suponiendo que el modelo Productos tiene un campo 'precio'
+                "nombre_producto": producto.nombre,  # Suponiendo que el modelo Productos tiene un campo 'nombre'
+                "total": detalle.cantidad * producto.precio,
+                "id_venta": detalle.id_venta.id_venta,
+                "id_producto": detalle.id_producto.id_producto,
+            }
+            detalles_data.append(detalle_data)
 
         response_data = {
-            "venta": serializer.data,
-            "detalles": detalles_serializer.data,
+            "venta": venta_serializer.data,
+            "detalles": detalles_data,
         }
 
         return Response(response_data)

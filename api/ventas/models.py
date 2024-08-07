@@ -10,11 +10,6 @@ class DetalleVenta(models.Model):
         "Productos", models.DO_NOTHING, db_column="id_producto", blank=True, null=True
     )
     cantidad = models.IntegerField()
-    total = models.DecimalField(max_digits=10, decimal_places=2)
-    precio_unitario = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
-    nombre_producto = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True
